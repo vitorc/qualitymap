@@ -14,7 +14,7 @@ test.describe('User registration', () => {
     
     test('Successful user registration', async ({ page }) => {
         const registerUser = new RegisterUser(page);
-        await registerUser.fillRegistrationForm('FirstNameUser', 'LastNameUser', 'test@test3.com', 'Company Test', 'test123', 'test123');
+        await registerUser.fillRegistrationForm('FirstNameUser', 'LastNameUser', 'test@test4.com', 'Company Test', 'test123', 'test123');
         await registerUser.selectDateOfBirth(28);
         await registerUser.selectMonthOfBirth(11);
         await registerUser.selectYearOfBirth("1985");
