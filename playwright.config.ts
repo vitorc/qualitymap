@@ -1,20 +1,20 @@
-import { PlaywrightTestConfig, defineConfig } from '@playwright/test';
+import type { PlaywrightTestConfig } from '@playwright/test';
 
-const isUITest = true;
-
-const config: PlaywrightTestConfig = defineConfig({
-  testDir: isUITest ? './tests/ui/tests' : './tests/api/tests',
+const config: PlaywrightTestConfig = {
+  testDir: './tests/',
   timeout: 30 * 1000,
+  fullyParallel: true,
   expect: {
-    timeout: 5000
+    timeout: 1000
   },
-  use: {
-    headless: true,
-    browserName: 'chromium',
-    baseURL: isUITest ? 'https://demo.nopcommerce.com/' : 'https://api.example.com',
-    screenshot: 'only-on-failure',
-    trace: 'on'
-  }
-});
-
+  use:{
+          headless: true,
+          browserName: 'chromium',
+          viewport: { width: 1920, height: 1080 },
+          baseURL: 'https://demo.nopcommerce.com',
+          screenshot: 'only-on-failure',
+          trace:'on'
+        },
+};
 export default config;
+
