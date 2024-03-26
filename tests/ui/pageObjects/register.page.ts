@@ -15,6 +15,7 @@ export class RegisterUser {
     readonly registerConfirmPasswordField: Locator;
     readonly registerButton: Locator;
     readonly successMessage: Locator;
+    readonly errorEmailMessage: Locator;
 
     constructor(page: Page, dayValue: number, monthValue: number, yearValue: number) {
         this.page = page;
@@ -31,6 +32,7 @@ export class RegisterUser {
         this.registerConfirmPasswordField = page.locator("#confirmPassword");
         this.registerButton = page.locator("#register-button");
         this.successMessage = page.locator("//div[@class='result']");
+        this.errorEmailMessage = page.locator("#Email-error");
     }
 
     async fillRegistrationForm(firstName: string, lastName: string, email: string, companyName: string, password: string) {
@@ -65,4 +67,12 @@ export class RegisterUser {
             console.error("Registration failed!");
         }
     }  
+    async verifyEmailError() {
+        const errorEmailMessageText = await this.errorEmailMessage.textContent();
+        if (errorEmailMessageText && errorEmailMessageText.includes('Wrong email')) {
+            console.log("Registration failed!");
+        } else {
+            console.error("Test failed!");
+        }
+    }
 }
