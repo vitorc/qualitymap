@@ -1,6 +1,6 @@
 import { PlaywrightTestConfig, defineConfig } from '@playwright/test';
 
-const isUITest = true; // Assuming isUITest is defined somewhere in your code
+const isUITest = true;
 
 const config: PlaywrightTestConfig = defineConfig({
   testDir: isUITest ? './tests/ui/tests' : './tests/api/tests',
