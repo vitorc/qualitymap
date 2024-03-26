@@ -21,16 +21,16 @@ export class RegisterUser {
         this.genderMale = page.locator("#gender-male");
         this.registerFirstNameField = page.locator("#FirstName");
         this.registerLastNameField = page.locator("#LastName");
-        this.dayOfBirth = page.locator(`select[name="DateOfBirthDay"] option[value="${dayValue}"]`);
-        this.monthOfBirth = page.locator(`select[name="DateOfBirthMonth"] option[value="${monthValue}"]`);
-        this.yearOfBirth = page.locator(`select[name="DateOfBirthYear"] option[value="${yearValue}"]`);
+        this.dayOfBirth = page.locator(`select[name="DateOfBirthDay"]`);
+        this.monthOfBirth = page.locator(`select[name="DateOfBirthMonth"]`);
+        this.yearOfBirth = page.locator(`select[name="DateOfBirthYear"]`);
         this.emailField = page.locator("#Email");
         this.companyName = page.locator("#Company");
         this.newsletter = page.locator("#Newsletter");
         this.registerPasswordField = page.locator("#password");
-        this.registerConfirmPasswordField = page.locator("#password");
-        this.registerButton = page.locator("#login-button");
-        this.successMessage = page.locator(".success-message");
+        this.registerConfirmPasswordField = page.locator("#confirmPassword");
+        this.registerButton = page.locator("#register-button");
+        this.successMessage = page.locator("//div[@class='result']");
     }
 
     async fillRegistrationForm(firstName: string, lastName: string, email: string, companyName: string, password: string) {
@@ -43,10 +43,10 @@ export class RegisterUser {
         await this.registerConfirmPasswordField.fill(password);
     }
 
-    async selectDateOfBirth() {
-        await this.dayOfBirth.check();
-        await this.monthOfBirth.check();
-        await this.yearOfBirth.check();
+    async selectDateOfBirth(dayValue: number, monthValue: number, yearValue: number) {
+        await this.dayOfBirth.selectOption({ index: dayValue });
+        await this.monthOfBirth.selectOption({ index: monthValue });
+        await this.yearOfBirth.selectOption({ index: yearValue });
     }
 
     async uncheckNewsletter() {
@@ -58,6 +58,11 @@ export class RegisterUser {
     }
 
     async verifyRegistrationSuccess() {
-        await this.successMessage.waitFor({ state: 'visible' });
-    }
+        const successMessageText = await this.successMessage.textContent();
+        if (successMessageText && successMessageText.includes('Your registration completed')) {
+            console.log("Registration successful!");
+        } else {
+            console.error("Registration failed!");
+        }
+    }  
 }
